@@ -6,8 +6,13 @@ from openai import OpenAI
 st.set_page_config(page_title="Revenue AI Assistant", layout="wide")
 st.title("🤖 Asistente de Revenue Management con IA")
 
-# Tu clave de acceso de OpenAI API (Usando secrets para seguridad web)
-API_KEY = st.secrets["OPENAI_API_KEY"]
+# 1. Tu clave de acceso de OpenAI API (Manejo seguro de Secrets)
+try:
+    API_KEY = st.secrets["OPENAI_API_KEY"]
+except KeyError:
+    st.error("⚠️ Falta configurar la API Key. Ve a 'Manage app' (abajo a la derecha) > 'Settings' > 'Secrets' y añade tu OPENAI_API_KEY.")
+    st.stop() # Detiene la app limpiamente hasta que pongas la clave
+
 client = OpenAI(api_key=API_KEY)
 
 def limpiar_columna_numerica(df, columna):
