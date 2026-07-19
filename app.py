@@ -5,22 +5,39 @@ from openai import OpenAI
 # Configuración de la página visual para un look innovador
 st.set_page_config(page_title="Revenue AI Assistant", layout="wide")
 
-# Estilos CSS para un diseño Tecnológico, Innovador y Oscuro (Dark Mode Tech)
+# Encabezado principal solicitado
+st.markdown("<h3 style='text-align: center; color: #00FFC6; text-shadow: 0px 0px 10px rgba(0, 255, 198, 0.4); margin-top: -20px;'>Proyecto IA Generativa UPB</h3>", unsafe_allow_html=True)
+
+# Estilos CSS para un diseño Tecnológico, Innovador, Oscuro y Legible
 st.markdown("""
     <style>
     /* Fondo principal modo oscuro tecnológico */
     .stApp {
-        background-color: #070B19; /* Azul noche casi negro */
+        background-color: #070B19; 
     }
     
-    /* Tipografía general para que contraste en la oscuridad */
-    .stMarkdown p, .stText p, label, span {
-        color: #A0AABF !important;
+    /* Tipografía general clara para contraste perfecto */
+    .stMarkdown p, .stText p, label, span, div {
+        color: #E2E8F0 !important;
         font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
+    /* Diseño ejecutivo y tecnológico para el Sidebar */
+    [data-testid="stSidebar"] {
+        background-color: #0A1128 !important;
+        border-right: 1px solid rgba(0, 229, 255, 0.2) !important;
+    }
+
+    /* Estilo oscuro para el contenedor de la tabla de datos */
+    [data-testid="stDataFrame"] {
+        background-color: #0A1128 !important;
+        border: 1px solid rgba(0, 229, 255, 0.2);
+        border-radius: 5px;
+        padding: 5px;
+    }
+
     /* Títulos con efecto neón/cyber (Cyan) */
-    h1, h2, h3 {
+    h1, h2 {
         color: #00E5FF !important;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         letter-spacing: 0.5px;
@@ -37,7 +54,7 @@ st.markdown("""
     
     /* Etiquetas de las métricas */
     [data-testid="stMetricLabel"] {
-        color: #637381 !important;
+        color: #8B9BB4 !important;
         text-transform: uppercase;
         letter-spacing: 1px;
         font-size: 0.8rem;
