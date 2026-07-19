@@ -36,6 +36,32 @@ st.markdown("""
         padding: 5px;
     }
 
+    /* Selectores (dropdowns) oscuros con texto claro */
+    div[data-baseweb="select"] > div {
+        background-color: #0C1222 !important;
+        color: #E2E8F0 !important;
+        border: 1px solid rgba(0, 229, 255, 0.2) !important;
+    }
+    div[data-baseweb="select"] span {
+        color: #E2E8F0 !important;
+    }
+    ul[data-baseweb="menu"] {
+        background-color: #0C1222 !important;
+    }
+    li[data-baseweb="menu-item"] {
+        color: #E2E8F0 !important;
+    }
+
+    /* Espacio del chat (Input) oscuro con texto claro */
+    [data-testid="stChatInput"] > div {
+        background-color: #0C1222 !important;
+        border: 1px solid rgba(0, 229, 255, 0.2) !important;
+    }
+    [data-testid="stChatInput"] textarea {
+        color: #E2E8F0 !important;
+        caret-color: #00E5FF !important; /* Cursor de texto color cyan */
+    }
+
     /* Títulos con efecto neón/cyber (Cyan) */
     h1, h2 {
         color: #00E5FF !important;
