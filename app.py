@@ -11,11 +11,16 @@ st.markdown("<h3 style='text-align: center; color: #00FFC6; text-shadow: 0px 0px
 # Estilos CSS para un diseño Tecnológico, Innovador, Oscuro y Legible
 st.markdown("""
     <style>
-    /* Fondo principal modo oscuro tecnológico */
-    .stApp {
-        background-color: #070B19; 
+    /* Fondo principal y elementos base oscuros (Elimina franjas blancas) */
+    .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
+        background-color: #070B19 !important; 
     }
     
+    /* Eliminar franja blanca del fondo del chat */
+    [data-testid="stBottomBlock"], [data-testid="stBottom"], .stChatInputContainer {
+        background-color: #070B19 !important;
+    }
+
     /* Tipografía general clara para contraste perfecto */
     .stMarkdown p, .stText p, label, span, div {
         color: #E2E8F0 !important;
@@ -28,49 +33,63 @@ st.markdown("""
         border-right: 1px solid rgba(0, 229, 255, 0.2) !important;
     }
 
-    /* Estilo oscuro para el contenedor de la tabla de datos */
-    [data-testid="stDataFrame"] {
+    /* Tabla de datos con fondo oscuro y borde luminoso */
+    [data-testid="stDataFrame"] > div {
         background-color: #0A1128 !important;
-        border: 1px solid rgba(0, 229, 255, 0.2);
-        border-radius: 5px;
-        padding: 5px;
+        border: 1px solid #00E5FF !important;
+        box-shadow: 0px 0px 15px rgba(0, 229, 255, 0.4) !important;
+        border-radius: 8px !important;
     }
 
-    /* Selectores (dropdowns) oscuros con texto claro */
+    /* Selectores (dropdowns) oscuros con texto claro, incluyendo la lista desplegable */
     div[data-baseweb="select"] > div {
         background-color: #0C1222 !important;
         color: #E2E8F0 !important;
-        border: 1px solid rgba(0, 229, 255, 0.2) !important;
+        border: 1px solid rgba(0, 229, 255, 0.5) !important;
     }
-    div[data-baseweb="select"] span {
-        color: #E2E8F0 !important;
-    }
-    ul[data-baseweb="menu"] {
+    div[data-baseweb="popover"] > div, ul[data-baseweb="menu"], ul[role="listbox"] {
         background-color: #0C1222 !important;
+        border: 1px solid rgba(0, 229, 255, 0.3) !important;
     }
-    li[data-baseweb="menu-item"] {
+    li[data-baseweb="menu-item"], li[role="option"] {
+        background-color: #0C1222 !important;
         color: #E2E8F0 !important;
+    }
+    li[data-baseweb="menu-item"]:hover, li[role="option"]:hover {
+        background-color: #1A233A !important;
     }
 
-    /* Espacio del chat (Input) oscuro con texto claro */
+    /* Espacio del chat oscuro con texto claro y borde luminoso */
+    [data-testid="stChatInput"] {
+        background-color: #070B19 !important;
+    }
     [data-testid="stChatInput"] > div {
         background-color: #0C1222 !important;
-        border: 1px solid rgba(0, 229, 255, 0.2) !important;
+        border: 1px solid rgba(0, 229, 255, 0.5) !important;
+        box-shadow: 0px 0px 10px rgba(0, 229, 255, 0.2) !important;
     }
     [data-testid="stChatInput"] textarea {
         color: #E2E8F0 !important;
-        caret-color: #00E5FF !important; /* Cursor de texto color cyan */
+        caret-color: #00E5FF !important;
     }
 
     /* Títulos con efecto neón/cyber (Cyan) */
     h1, h2 {
         color: #00E5FF !important;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        letter-spacing: 0.5px;
         text-shadow: 0px 0px 10px rgba(0, 229, 255, 0.3);
     }
 
-    /* Estilo futurista para métricas (Verde eléctrico) */
+    /* Indicadores KPI en recuadros luminosos */
+    [data-testid="stMetric"] {
+        background-color: #0A1128 !important;
+        border: 1px solid #00FFC6 !important;
+        box-shadow: 0px 0px 15px rgba(0, 255, 198, 0.25) !important;
+        border-radius: 8px !important;
+        padding: 15px !important;
+    }
+
+    /* Estilo futurista para el valor de las métricas (Verde eléctrico) */
     [data-testid="stMetricValue"] {
         color: #00FFC6 !important;
         font-weight: 700;
