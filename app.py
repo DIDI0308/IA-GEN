@@ -12,18 +12,21 @@ st.markdown("<h3 style='text-align: center; color: #00FFC6; text-shadow: 0px 0px
 st.markdown("""
     <style>
     /* Fondo principal y elementos base oscuros */
-    .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
+    .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"], main {
         background-color: #070B19 !important; 
     }
     
-    /* 1. Fondo fijo inferior del Chat completamente oscuro */
-    [data-testid="stBottomBlock"], [data-testid="stBottom"], .stChatInputContainer, div.stBottom {
+    /* 1. ELIMINAR FRANJA BLANCA INFERIOR DEL CHAT: Forzar fondo oscuro absoluto */
+    [data-testid="stBottom"], 
+    [data-testid="stBottom"] > div, 
+    [data-testid="stBottomBlock"], 
+    .stChatInputContainer, 
+    .stAppBottomBlock {
         background-color: #070B19 !important;
-        background: #070B19 !important;
     }
 
     /* Tipografía general clara para contraste perfecto */
-    .stMarkdown p, .stText p, label, span, div {
+    .stMarkdown p, .stText p, label, div {
         color: #E2E8F0 !important;
         font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
@@ -49,17 +52,19 @@ st.markdown("""
         border: 1px solid rgba(0, 229, 255, 0.5) !important;
     }
     
-    /* 2. Cascada de opciones desplegables con TEXTO OSCURO */
+    /* 2. CASCADA DE OPCIONES DESPLEGABLES CON TEXTO OSCURO */
     div[data-baseweb="popover"] > div, ul[data-baseweb="menu"], ul[role="listbox"] {
-        background-color: #FFFFFF !important; /* Fondo claro para que se lea el texto */
+        background-color: #FFFFFF !important; /* Fondo claro para contraste */
         border: 1px solid rgba(0, 229, 255, 0.8) !important;
     }
-    li[data-baseweb="menu-item"], li[role="option"] {
+    li[data-baseweb="menu-item"], li[role="option"],
+    li[data-baseweb="menu-item"] span, li[role="option"] span {
         background-color: #FFFFFF !important;
-        color: #0A1128 !important; /* TEXTO OSCURO */
-        font-weight: 500;
+        color: #0A1128 !important; /* TEXTO OSCURO GARANTIZADO */
+        font-weight: 600 !important;
     }
-    li[data-baseweb="menu-item"]:hover, li[role="option"]:hover {
+    li[data-baseweb="menu-item"]:hover, li[role="option"]:hover,
+    li[data-baseweb="menu-item"]:hover span, li[role="option"]:hover span {
         background-color: #E2E8F0 !important;
     }
 
@@ -70,10 +75,10 @@ st.markdown("""
     [data-testid="stChatInput"] > div {
         background-color: #0C1222 !important;
         border: 2px solid #00E5FF !important; /* Borde más grueso y cyan */
-        box-shadow: 0px 0px 18px rgba(0, 229, 255, 0.7) !important; /* Brillo de neón más fuerte */
+        box-shadow: 0px 0px 18px rgba(0, 229, 255, 0.7) !important; /* Brillo de neón */
     }
     [data-testid="stChatInput"] textarea {
-        color: #FFFFFF !important; /* Texto claro */
+        color: #FFFFFF !important; /* Texto claro al escribir */
         caret-color: #00E5FF !important;
     }
 
