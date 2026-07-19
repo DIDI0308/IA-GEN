@@ -52,19 +52,24 @@ st.markdown("""
         border: 1px solid rgba(0, 229, 255, 0.5) !important;
     }
     
-    /* 2. CASCADA DE OPCIONES DESPLEGABLES CON TEXTO OSCURO */
-    div[data-baseweb="popover"] > div, ul[data-baseweb="menu"], ul[role="listbox"] {
+    /* 2. CASCADA DE OPCIONES DESPLEGABLES CON TEXTO OSCURO GARANTIZADO */
+    div[data-baseweb="popover"], div[data-baseweb="popover"] > div, ul[data-baseweb="menu"], ul[role="listbox"] {
         background-color: #FFFFFF !important; /* Fondo claro para contraste */
         border: 1px solid rgba(0, 229, 255, 0.8) !important;
     }
-    li[data-baseweb="menu-item"], li[role="option"],
-    li[data-baseweb="menu-item"] span, li[role="option"] span {
+    
+    /* Forzar texto oscuro en absolutamente todos los niveles internos de la cascada */
+    div[data-baseweb="popover"] *, ul[data-baseweb="menu"] *, ul[role="listbox"] * {
+        color: #0A1128 !important; 
+    }
+
+    li[data-baseweb="menu-item"], li[role="option"] {
         background-color: #FFFFFF !important;
-        color: #0A1128 !important; /* TEXTO OSCURO GARANTIZADO */
         font-weight: 600 !important;
     }
+    
     li[data-baseweb="menu-item"]:hover, li[role="option"]:hover,
-    li[data-baseweb="menu-item"]:hover span, li[role="option"]:hover span {
+    li[data-baseweb="menu-item"]:hover *, li[role="option"]:hover * {
         background-color: #E2E8F0 !important;
     }
 
