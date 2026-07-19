@@ -11,14 +11,15 @@ st.markdown("<h3 style='text-align: center; color: #00FFC6; text-shadow: 0px 0px
 # Estilos CSS para un diseño Tecnológico, Innovador, Oscuro y Legible
 st.markdown("""
     <style>
-    /* Fondo principal y elementos base oscuros (Elimina franjas blancas) */
+    /* Fondo principal y elementos base oscuros */
     .stApp, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
         background-color: #070B19 !important; 
     }
     
-    /* Eliminar franja blanca del fondo del chat */
-    [data-testid="stBottomBlock"], [data-testid="stBottom"], .stChatInputContainer {
+    /* 1. Fondo fijo inferior del Chat completamente oscuro */
+    [data-testid="stBottomBlock"], [data-testid="stBottom"], .stChatInputContainer, div.stBottom {
         background-color: #070B19 !important;
+        background: #070B19 !important;
     }
 
     /* Tipografía general clara para contraste perfecto */
@@ -41,35 +42,38 @@ st.markdown("""
         border-radius: 8px !important;
     }
 
-    /* Selectores (dropdowns) oscuros con texto claro, incluyendo la lista desplegable */
+    /* Selectores cerrados oscuros con texto claro */
     div[data-baseweb="select"] > div {
         background-color: #0C1222 !important;
         color: #E2E8F0 !important;
         border: 1px solid rgba(0, 229, 255, 0.5) !important;
     }
+    
+    /* 2. Cascada de opciones desplegables con TEXTO OSCURO */
     div[data-baseweb="popover"] > div, ul[data-baseweb="menu"], ul[role="listbox"] {
-        background-color: #0C1222 !important;
-        border: 1px solid rgba(0, 229, 255, 0.3) !important;
+        background-color: #FFFFFF !important; /* Fondo claro para que se lea el texto */
+        border: 1px solid rgba(0, 229, 255, 0.8) !important;
     }
     li[data-baseweb="menu-item"], li[role="option"] {
-        background-color: #0C1222 !important;
-        color: #E2E8F0 !important;
+        background-color: #FFFFFF !important;
+        color: #0A1128 !important; /* TEXTO OSCURO */
+        font-weight: 500;
     }
     li[data-baseweb="menu-item"]:hover, li[role="option"]:hover {
-        background-color: #1A233A !important;
+        background-color: #E2E8F0 !important;
     }
 
-    /* Espacio del chat oscuro con texto claro y borde luminoso */
+    /* 3. Espacio donde se escribe para la IA (Borde brilloso y texto claro) */
     [data-testid="stChatInput"] {
         background-color: #070B19 !important;
     }
     [data-testid="stChatInput"] > div {
         background-color: #0C1222 !important;
-        border: 1px solid rgba(0, 229, 255, 0.5) !important;
-        box-shadow: 0px 0px 10px rgba(0, 229, 255, 0.2) !important;
+        border: 2px solid #00E5FF !important; /* Borde más grueso y cyan */
+        box-shadow: 0px 0px 18px rgba(0, 229, 255, 0.7) !important; /* Brillo de neón más fuerte */
     }
     [data-testid="stChatInput"] textarea {
-        color: #E2E8F0 !important;
+        color: #FFFFFF !important; /* Texto claro */
         caret-color: #00E5FF !important;
     }
 
