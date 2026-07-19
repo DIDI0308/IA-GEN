@@ -2,28 +2,60 @@ import pandas as pd
 import streamlit as st
 from openai import OpenAI
 
-# Configuración de la página visual para un look corporativo
+# Configuración de la página visual para un look innovador
 st.set_page_config(page_title="Revenue AI Assistant", layout="wide")
 
-# Estilos CSS para colores corporativos y formales
+# Estilos CSS para un diseño Tecnológico, Innovador y Oscuro (Dark Mode Tech)
 st.markdown("""
     <style>
-    /* Colores y tipografía corporativa */
+    /* Fondo principal modo oscuro tecnológico */
     .stApp {
-        background-color: #F4F6F9;
+        background-color: #070B19; /* Azul noche casi negro */
     }
+    
+    /* Tipografía general para que contraste en la oscuridad */
+    .stMarkdown p, .stText p, label, span {
+        color: #A0AABF !important;
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Títulos con efecto neón/cyber (Cyan) */
     h1, h2, h3 {
-        color: #1A365D !important;
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        color: #00E5FF !important;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        letter-spacing: 0.5px;
+        text-shadow: 0px 0px 10px rgba(0, 229, 255, 0.3);
     }
-    /* Estilo formal para métricas */
+
+    /* Estilo futurista para métricas (Verde eléctrico) */
     [data-testid="stMetricValue"] {
-        color: #2B6CB0;
-        font-weight: 600;
+        color: #00FFC6 !important;
+        font-weight: 700;
+        font-family: 'Courier New', Courier, monospace;
+        text-shadow: 0px 0px 12px rgba(0, 255, 198, 0.4);
     }
-    /* Líneas separadoras */
+    
+    /* Etiquetas de las métricas */
+    [data-testid="stMetricLabel"] {
+        color: #637381 !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.8rem;
+    }
+
+    /* Líneas separadoras tecnológicas */
     hr {
-        border-top: 2px solid #E2E8F0;
+        border-top: 1px solid #1A233A !important;
+        box-shadow: 0px 1px 5px rgba(0, 229, 255, 0.1);
+    }
+
+    /* Diseño cibernético para las burbujas de chat */
+    [data-testid="stChatMessage"] {
+        background-color: #0C1222 !important;
+        border-left: 3px solid #00E5FF;
+        border-radius: 4px;
+        padding: 1rem;
+        margin-bottom: 1rem;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -114,7 +146,7 @@ else:
     
     st.markdown("---")
     
-    # 3. INTERFAZ DE CHAT CON MEMORIA (Look SaaS Profesional)
+    # 3. INTERFAZ DE CHAT CON MEMORIA (Look Tecnológico)
     st.write("**Módulo de Consultas Estratégicas Asistidas por IA:**")
 
     # Inicializar el historial de conversación en la memoria temporal
@@ -134,19 +166,19 @@ else:
         with st.chat_message("user"):
             st.markdown(consulta_usuario)
 
-        # Preparar contexto de datos para la IA (Formato CSV para mayor precisión matemática)
+        # Preparar contexto de datos para la IA
         resumen_df = df_filtrado[['Listing Name', 'Rental Revenue', 'Unit Goal+', 'Rental Revenue STLY']].copy()
         datos_comprimidos = resumen_df.to_csv(index=False)
         
         prompt_sistema = f"""
         Usted es un sistema experto en Revenue Management corporativo y visualización de datos de rendimiento.
-        Actualmente está asistiendo a un ejecutivo analizando la siguiente base de datos filtrada:
+        Actualmente está asistiendo a un analista utilizando la siguiente base de datos filtrada:
         
         {datos_comprimidos}
         
         Instrucciones estrictas:
-        - Responda siempre con un tono formal, profesional y objetivo.
-        - Utilice la información provista en los datos para argumentar sus análisis.
+        - Responda siempre con un tono formal, analítico y tecnológico.
+        - Utilice la información provista en los datos para argumentar sus análisis de manera precisa.
         """
         
         # Construir el historial para enviarlo a la API
@@ -154,13 +186,13 @@ else:
         for m in st.session_state.mensajes_chat:
             mensajes_api.append({"role": m["role"], "content": m["content"]})
 
-        # Generar respuesta con efecto "Streaming" (Máquina de escribir)
+        # Generar respuesta con efecto "Streaming"
         with st.chat_message("assistant"):
             try:
                 stream = client.chat.completions.create(
                     model="gpt-4o", 
                     messages=mensajes_api,
-                    stream=True # Esto activa el efecto en tiempo real
+                    stream=True 
                 )
                 # Escribir la respuesta fluida en la pantalla
                 respuesta_completa = st.write_stream(stream)
