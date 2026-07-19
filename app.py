@@ -4,13 +4,45 @@ from openai import OpenAI
 
 # Configuración de la página visual para un look ejecutivo
 st.set_page_config(page_title="Revenue AI Assistant", layout="wide")
-st.title("🤖 Asistente de Revenue Management con IA")
+
+# Estilos CSS para colores corporativos y formales
+st.markdown("""
+    <style>
+    /* Colores y tipografía corporativa */
+    .stApp {
+        background-color: #F4F6F9;
+    }
+    h1, h2, h3 {
+        color: #1A365D !important;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    }
+    /* Estilo formal para botones */
+    .stButton>button {
+        background-color: #1A365D;
+        color: #FFFFFF;
+        border: none;
+        border-radius: 4px;
+        padding: 0.5rem 1rem;
+        font-weight: 600;
+    }
+    .stButton>button:hover {
+        background-color: #2A4365;
+        color: #FFFFFF;
+    }
+    /* Líneas separadoras */
+    hr {
+        border-top: 2px solid #E2E8F0;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+st.title("Sistema de Asistencia Analítica en Revenue Management")
 
 # 1. Tu clave de acceso de OpenAI API (Manejo seguro de Secrets)
 try:
     API_KEY = st.secrets["OPENAI_API_KEY"]
 except KeyError:
-    st.error("⚠️ Falta configurar la API Key. Ve a 'Manage app' (abajo a la derecha) > 'Settings' > 'Secrets' y añade tu OPENAI_API_KEY.")
+    st.error("Atención: Configuración de API Key incompleta. Proceda a 'Manage app' > 'Settings' > 'Secrets' y registre el parámetro OPENAI_API_KEY.")
     st.stop() # Detiene la app limpiamente hasta que pongas la clave
 
 client = OpenAI(api_key=API_KEY)
@@ -35,59 +67,59 @@ def cargar_datos(url):
         df = limpiar_columna_numerica(df, 'Unit Goal+')
         return df
     except Exception as e:
-        st.error(f"Error técnico al leer datos: {e}")
+        st.error(f"Error de sistema al procesar los datos: {e}")
         return None
 
 # ID del archivo Analisis Abril - Copy.csv extraído de tu carpeta compartida
 FILE_ID_CSV = "1AvYuNhj9OyLDkAiYsssmjXO62VyKy0Do"
 link_drive_csv = f"https://drive.google.com/uc?id={FILE_ID_CSV}"
 
-with st.spinner("Cargando base de datos a alta velocidad..."):
+with st.spinner("Inicializando carga de datos en el sistema..."):
     df_original = cargar_datos(link_drive_csv)
 
 if df_original is None:
-    st.error("❌ No se pudo descargar el archivo. Verifica que los permisos del CSV en Drive estén en 'Cualquier persona con el enlace'.")
+    st.error("Error de conexión: No se pudo acceder al repositorio de datos. Verifique los permisos de acceso del archivo CSV.")
 else:
     # --- BARRA LATERAL CONTROLES ---
-    st.sidebar.header("Filtros de Análisis")
+    st.sidebar.header("Parámetros de Análisis")
     
     # Selector de Mes
     meses_disponibles = df_original['Year & Month'].dropna().unique().tolist()
     # Pre-seleccionar Abril si existe, si no, el primer mes
     idx_mes = meses_disponibles.index("2026-04 (Apr)") if "2026-04 (Apr)" in meses_disponibles else 0
-    mes_filtro = st.sidebar.selectbox("Selecciona el Mes:", meses_disponibles, index=idx_mes)
+    mes_filtro = st.sidebar.selectbox("Seleccione el Período:", meses_disponibles, index=idx_mes)
     
     # Filtrar por mes seleccionado
     df_mes = df_original[df_original['Year & Month'] == mes_filtro].copy()
     
     # Selector de Cliente Interactivo
     clientes_disponibles = sorted(df_mes['Client'].dropna().unique().tolist())
-    cliente_seleccionado = st.sidebar.selectbox("Selecciona el Cliente/Propietario:", ["TODOS"] + clientes_disponibles)
+    cliente_seleccionado = st.sidebar.selectbox("Seleccione la Cartera/Propietario:", ["TODOS"] + clientes_disponibles)
     
     if cliente_seleccionado != "TODOS":
         df_filtrado = df_mes[df_mes['Client'] == cliente_seleccionado].copy()
     else:
         df_filtrado = df_mes.copy()
         
-    st.sidebar.metric(label="Propiedades seleccionadas", value=len(df_filtrado))
+    st.sidebar.metric(label="Total de propiedades en la selección", value=len(df_filtrado))
 
     # --- VENTANA DE DIÁLOGO E INTERACCIÓN ---
-    st.subheader(f"📊 Análisis de Datos para: {cliente_seleccionado} ({mes_filtro})")
+    st.subheader(f"Reporte de Rendimiento: {cliente_seleccionado} ({mes_filtro})")
     
     # Mostrar tabla interactiva (ajustada para diseño ejecutivo, sin índice)
     st.dataframe(df_filtrado, use_container_width=True, hide_index=True)
     
     st.markdown("---")
-    st.write("💬 **Hazle preguntas a la IA sobre las propiedades filtradas de este cliente:**")
+    st.write("**Módulo de Consultas Estratégicas:**")
 
     # Cuadro de texto interactivo
     consulta_usuario = st.text_input(
-        "Escribe aquí (Ej: '¿Cuáles propiedades están más lejos de su meta y qué estrategia recomiendas?'):",
+        "Ingrese su consulta analítica (Ej: 'Indique las propiedades con mayor desviación respecto a su meta y proponga una estrategia'):",
         key="query_input"
     )
 
-    if st.button("Consultar a la IA") and consulta_usuario:
-        with st.spinner("Pensando estrategia de revenue... 🧠"):
+    if st.button("Ejecutar Análisis de IA") and consulta_usuario:
+        with st.spinner("Procesando consulta mediante el motor de Inteligencia Artificial..."):
             
             # Construir un resumen compacto protegiendo cálculos de errores nulos
             resumen_propiedades = ""
@@ -114,8 +146,8 @@ else:
                         {"role": "user", "content": prompt_contexto}
                     ]
                 )
-                st.success("¡Análisis completado!")
+                st.success("Análisis estratégico finalizado con éxito.")
                 st.write(respuesta.choices[0].message.content)
             
             except Exception as e:
-                st.error(f"Hubo un error al conectar con OpenAI: {e}")
+                st.error(f"Falla de conexión con el servidor de OpenAI: {e}")
